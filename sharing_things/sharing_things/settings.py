@@ -81,8 +81,8 @@ DATABASES = {
     'default': {
         'HOST': '127.0.0.1',
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sharing_things_db',
-        'USER': 'postgres',
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_LOGIN'),
         'PASSWORD': os.getenv('DATABASE_PASS'),
     }
 }
