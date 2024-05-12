@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.template.response import TemplateResponse
 from django.views import View
 
+from .models import Donation
+
 
 # Create your views here.
 
@@ -11,7 +13,23 @@ class Test(View):
         return HttpResponse('test działania')
 class LandingPage(View):
     def get(self, request):
-        return render(request, 'index.html')
+
+        donations = Donation.objects.all()
+        quantity = 0
+        institutions = []
+
+        for donation in donations:
+            quantity += donation.quantity
+            if donation.institution not in institutions:
+                institutions.append(donation.institution)
+
+        context = {
+            'quantity': quantity,
+            'institutions': len(institutions)
+
+
+        }
+        return render(request, 'index.html', context)
 
 class AddDonation(View):
     def get(self, request):
