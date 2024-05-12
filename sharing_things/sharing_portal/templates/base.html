@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        {% block head %}
+            {% include 'static_html/head.html' %}
+        {% endblock %}
+    </head>
+    <body>
+        {% block header %}
+
+        {% endblock %}
+
+        {% block content %}
+
+        {% endblock %}
+
+        {% block footer %}
+            {% include 'static_html/footer.html' %}
+        {% endblock %}
+
+        {% block js %}
+
+        {% endblock %}
+
+    </body>
+</html>
