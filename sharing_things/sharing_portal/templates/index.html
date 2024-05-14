@@ -96,7 +96,7 @@
                   
                     <div class="col"><div class="text">
                         {% for element in foundation.categories.all %}
-                              {{ element.name }}
+                              {{ element.name }}, 
                         {%  endfor %}  
                     </div></div>
                   
@@ -127,7 +127,12 @@
                       <div class="subtitle">{{ organization.description }}</div>
                     </div>
 
-                    <div class="col"><div class="text">{{ organization.categories }}</div></div>
+                    <div class="col"><div class="text">
+                        {% for element in organization.categories.all %}
+                              {{ element.name }}, 
+                        {%  endfor %}  
+                    </div></div>
+                  
                   </li>
                 {% endfor %}
         </ul>
@@ -154,7 +159,12 @@
                       <div class="subtitle">{{ local.description }}</div>
                     </div>
 
-                    <div class="col"><div class="text">{{ local.categories }}</div></div>
+                    <div class="col"><div class="text">
+                        {% for element in local.categories.all %}
+                              {{ element.name }}, 
+                        {%  endfor %}  
+                    </div></div>
+                  
                   </li>
                 {% endfor %}
         </ul>
