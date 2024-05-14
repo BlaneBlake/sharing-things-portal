@@ -17,11 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from sharing_portal.views import LandingPage
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', LandingPage.as_view(), name='landing'),
-    path('share/', include('sharing_portal.urls')),
+    path('', include('sharing_portal.urls')),
 
 ]

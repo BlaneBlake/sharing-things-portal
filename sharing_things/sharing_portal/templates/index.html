@@ -61,7 +61,7 @@
             </div>
           </div>
 
-          <a href="#" class="btn btn--large">Załóż konto</a>
+          <a href="{% url 'register' %}#register" class="btn btn--large">Załóż konto</a>
         </section>
 
         <section id="about-us" class="about-us">
@@ -87,16 +87,21 @@
         <p>W naszej bazie znajdziesz listę zweryfikowanych Fundacji, z którymi współpracujemy. Możesz sprawdzić czym się zajmują, komu pomagają i czego potrzebują.</p>
 
         <ul class="help--slides-items">
-          {% for fundation in fundations %}
+          {% for foundation in foundations %}
                   <li>
                     <div class="col">
-                      <div class="title">{{ fundation.name }}</div>
-                      <div class="subtitle">{{ fundation.description }}</div>
+                      <div class="title">{{ foundation.name }}</div>
+                      <div class="subtitle">{{ foundation.description }}</div>
                     </div>
-
-                    <div class="col"><div class="text">{{ fundation.categoties }}</div></div>
+                  
+                    <div class="col"><div class="text">
+                        {% for element in foundation.categories.all %}
+                              {{ element.name }}
+                        {%  endfor %}  
+                    </div></div>
+                  
                   </li>
-                {% endfor %}
+          {% endfor %}      
         </ul>
         <!-- Pagination
         <ul class="help--slides-pagination">
@@ -122,7 +127,7 @@
                       <div class="subtitle">{{ organization.description }}</div>
                     </div>
 
-                    <div class="col"><div class="text">{{ organization.categoties }}</div></div>
+                    <div class="col"><div class="text">{{ organization.categories }}</div></div>
                   </li>
                 {% endfor %}
         </ul>
@@ -149,7 +154,7 @@
                       <div class="subtitle">{{ local.description }}</div>
                     </div>
 
-                    <div class="col"><div class="text">{{ local.categoties }}</div></div>
+                    <div class="col"><div class="text">{{ local.categories }}</div></div>
                   </li>
                 {% endfor %}
         </ul>

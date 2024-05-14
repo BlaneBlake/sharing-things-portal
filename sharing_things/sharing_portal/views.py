@@ -28,7 +28,7 @@ class LandingPage(View):
         context = {
             'quantity': quantity,
             'number_of_institutions': len(institutions),
-            'fundations': Institution.objects.filter(type=1),
+            'foundations': Institution.objects.filter(type=1),
             'organizations': Institution.objects.filter(type=2),
             'locals': Institution.objects.filter(type=3),
 
@@ -49,3 +49,8 @@ class Login(View):
 class Register(View):
     def get(self, request):
         return render(request, 'register.html')
+
+    def post(self, request):
+        # if not request.user.is_authenticated:
+
+        pass
