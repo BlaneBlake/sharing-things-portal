@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.template.response import TemplateResponse
 from django.views import View
 
-from .models import Donation
+from .models import Donation, Institution
 
 
 # Create your views here.
@@ -11,6 +11,8 @@ from .models import Donation
 class Test(View):
     def get(self, request):
         return HttpResponse('test działania')
+
+
 class LandingPage(View):
     def get(self, request):
 
@@ -25,19 +27,24 @@ class LandingPage(View):
 
         context = {
             'quantity': quantity,
-            'institutions': len(institutions)
-
+            'number_of_institutions': len(institutions),
+            'fundations': Institution.objects.filter(type=1),
+            'organizations': Institution.objects.filter(type=2),
+            'locals': Institution.objects.filter(type=3),
 
         }
         return render(request, 'index.html', context)
+
 
 class AddDonation(View):
     def get(self, request):
         return render(request, 'form.html')
 
+
 class Login(View):
     def get(self, request):
         return TemplateResponse(request, 'login.html')
+
 
 class Register(View):
     def get(self, request):
