@@ -1,8 +1,13 @@
+from audioop import reverse
+
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template.response import TemplateResponse
+from django.urls import reverse_lazy
 from django.views import View
+from django.views.generic import RedirectView
 
 # from .forms import RegisterForm
 from .models import Donation, Institution
@@ -44,9 +49,32 @@ class AddDonation(View):
 
 
 class Login(View):
-    def get(self, request):
-        return TemplateResponse(request, 'login.html')
+    template_name = 'login.html'
+    success_url = reverse_lazy('landing')
 
+    def get(self, request):
+        return TemplateResponse(request, self.template_name)
+
+    def post(self, request):
+        username = request.POST['email']
+        password = request.POST['password']
+
+        user = authenticate(request=request, username=username, password=password)
+
+        if user is not None:
+            login(self.request, user)
+            return redirect('landing')
+        else:
+            return redirect('register')
+            # return render(self.request, reverse('register'), {'error_message': 'błąd logowania! brak uzytkownika. '})
+
+
+class LogoutView(RedirectView):
+    url = reverse_lazy('login')
+
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return super().get(request, *args, **kwargs)
 
 class Register(View):
     template_name = 'register.html'
