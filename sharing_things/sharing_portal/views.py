@@ -65,7 +65,8 @@ class Login(View):
             login(self.request, user)
             return redirect('landing')
         else:
-            return render(self.request, self.template_name, {'error_message': 'błąd logowania!'})
+            return redirect('register')
+            # return render(self.request, reverse('register'), {'error_message': 'błąd logowania! brak uzytkownika. '})
 
 
 class LogoutView(RedirectView):
