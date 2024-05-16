@@ -1,8 +1,15 @@
-from django.http import HttpResponse
-from django.shortcuts import render
-from django.template.response import TemplateResponse
-from django.views import View
+from audioop import reverse
 
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.template.response import TemplateResponse
+from django.urls import reverse_lazy
+from django.views import View
+from django.views.generic import RedirectView
+
+# from .forms import RegisterForm
 from .models import Donation, Institution
 
 
@@ -28,7 +35,7 @@ class LandingPage(View):
         context = {
             'quantity': quantity,
             'number_of_institutions': len(institutions),
-            'fundations': Institution.objects.filter(type=1),
+            'foundations': Institution.objects.filter(type=1),
             'organizations': Institution.objects.filter(type=2),
             'locals': Institution.objects.filter(type=3),
 
@@ -42,10 +49,58 @@ class AddDonation(View):
 
 
 class Login(View):
-    def get(self, request):
-        return TemplateResponse(request, 'login.html')
+    template_name = 'login.html'
+    success_url = reverse_lazy('landing')
 
+    def get(self, request):
+        return TemplateResponse(request, self.template_name)
+
+    def post(self, request):
+        username = request.POST['email']
+        password = request.POST['password']
+
+        user = authenticate(request=request, username=username, password=password)
+
+        if user is not None:
+            login(self.request, user)
+            return redirect('landing')
+        else:
+            return redirect('register')
+            # return render(self.request, reverse('register'), {'error_message': 'błąd logowania! brak uzytkownika. '})
+
+
+class LogoutView(RedirectView):
+    url = reverse_lazy('login')
+
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return super().get(request, *args, **kwargs)
 
 class Register(View):
+    template_name = 'register.html'
+
     def get(self, request):
-        return render(request, 'register.html')
+        # form = RegisterForm()
+        return render(request, self.template_name) #, {'form': form})
+
+    def post(self, request):
+        # form = RegisterForm(request.POST
+        # if form.is_valid():
+        #     user = User.objects.create_user(form.cleaned_data['e-mail'], form.cleaned_data['e-mail'], form.cleaned_data['password'])
+        #     # procesowanie danych
+        #     return HttpResponse('User already exist!!@!')
+        # else:
+        #     return HttpResponse('Form is invalid!!!')
+
+        username = email = request.POST['email']
+        name = request.POST['name']
+        surname = request.POST['surname']
+        password = request.POST['password']
+        password2 = request.POST['password2']
+
+        if password == password2:
+            user = User.objects.create_user(username, email, password, first_name=name, last_name=surname)
+        else:
+            return HttpResponse('password mismatch')
+
+        return redirect('login')
