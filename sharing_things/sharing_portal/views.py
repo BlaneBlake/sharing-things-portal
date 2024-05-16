@@ -1,8 +1,10 @@
+from django.contrib.auth.models import User
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template.response import TemplateResponse
 from django.views import View
 
+# from .forms import RegisterForm
 from .models import Donation, Institution
 
 
@@ -47,10 +49,30 @@ class Login(View):
 
 
 class Register(View):
+    template_name = 'register.html'
+
     def get(self, request):
-        return render(request, 'register.html')
+        # form = RegisterForm()
+        return render(request, self.template_name) #, {'form': form})
 
     def post(self, request):
-        # if not request.user.is_authenticated:
+        # form = RegisterForm(request.POST
+        # if form.is_valid():
+        #     user = User.objects.create_user(form.cleaned_data['e-mail'], form.cleaned_data['e-mail'], form.cleaned_data['password'])
+        #     # procesowanie danych
+        #     return HttpResponse('User already exist!!@!')
+        # else:
+        #     return HttpResponse('Form is invalid!!!')
 
-        pass
+        username = email = request.POST['email']
+        name = request.POST['name']
+        surname = request.POST['surname']
+        password = request.POST['password']
+        password2 = request.POST['password2']
+
+        if password == password2:
+            user = User.objects.create_user(username, email, password, first_name=name, last_name=surname)
+        else:
+            return HttpResponse('password mismatch')
+
+        return redirect('login')
