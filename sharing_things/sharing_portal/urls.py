@@ -15,7 +15,7 @@ Including another URLconf
 """
 
 from django.urls import path
-from .views import (Test, AddDonation, Login, Register, LandingPage)
+from .views import (Test, AddDonation, Login, Register, LandingPage, LogoutView)
 
 urlpatterns = [
     path('test/', Test.as_view(), name='test'),
@@ -23,4 +23,5 @@ urlpatterns = [
     path('login/', Login.as_view(), name='login'),
     path('register/', Register.as_view(), name='register'),
     path('add-donation/', AddDonation.as_view(), name='add-donation'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     ]
