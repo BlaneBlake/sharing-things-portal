@@ -2,7 +2,8 @@
 
 <nav class="container container--70">
     {% block login %}
-        {% if user.is_authenticated %}
+        
+        {% if user.is_authenticated and user.is_superuser %}
             <ul class="nav--actions">
               <li class="logged-user">
                 Witaj {{ user.username }}
@@ -10,6 +11,19 @@
                 <ul class="dropdown">
                   <li><a href="#">Profil</a></li>
                   <li><a href="#">Ustawienia</a></li>
+                  <li><a href="/admin">Panel administracyjny</a></li>                     
+                  <li><a href="{% url 'logout' %}">Wyloguj</a></li>
+                </ul>
+              </li>
+            </ul>
+        {% elif user.is_authenticated %}
+            <ul class="nav--actions">
+              <li class="logged-user">
+                Witaj {{ user.username }}
+                  
+                <ul class="dropdown">
+                  <li><a href="#">Profil</a></li>
+                  <li><a href="#">Ustawienia</a></li>                     
                   <li><a href="{% url 'logout' %}">Wyloguj</a></li>
                 </ul>
               </li>
