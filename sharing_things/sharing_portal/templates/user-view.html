@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block header %}
+        <header>
+            {% include 'static_html/navigation.html' %}
+        </header>
+    {% endblock %}
+
+    {% block content %}
+        <p> {{ first_name }} </p>
+        <p> {{ last_name }} </p>
+        <p> {{ email }} </p>
+    {% endblock %}

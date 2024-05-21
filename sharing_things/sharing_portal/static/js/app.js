@@ -253,3 +253,17 @@ document.addEventListener("DOMContentLoaded", function() {
     new FormSteps(form);
   }
 });
+
+
+// --------------KROK 5---------------------
+const donation ={
+  choosenCategories: document.querySelectorAll(" input[type=checkbox]"),
+  // choose: function ()
+
+}
+
+// POBIERA WARTOSCI WSZYSTKICH PÓL INPUT
+// document.querySelectorAll(" input[type=checkbox]").forEach(function(value, index, array) {
+//         console.log('element ' + index + ' to ' + value.value)
+//
+//     });
