@@ -1,6 +1,6 @@
 from audioop import reverse
 
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -84,6 +84,7 @@ class LogoutView(RedirectView):
         logout(request)
         return super().get(request, *args, **kwargs)
 
+
 class Register(View):
     template_name = 'register.html'
 
@@ -108,4 +109,12 @@ class Register(View):
 
 class UserView(View):
     def get(self, request):
-        return render(request, 'user-view.html')
+        context = {
+
+            'first_name': request.user.first_name,
+            'last_name': request.user.last_name,
+            'email': request.user.email,
+
+
+        }
+        return render(request, 'user-view.html', context)
