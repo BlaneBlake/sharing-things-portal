@@ -1,6 +1,7 @@
 from audioop import reverse
 
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -9,8 +10,7 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import RedirectView
 
-# from .forms import RegisterForm
-from .models import Donation, Institution
+from .models import Donation, Institution, Category
 
 
 # Create your views here.
@@ -43,9 +43,17 @@ class LandingPage(View):
         return render(request, 'index.html', context)
 
 
-class AddDonation(View):
+class AddDonation(LoginRequiredMixin, View):
+    login_url = reverse_lazy('login')
+# przekierowanie się nie uruchamia poprawnie po logowaniu
+
     def get(self, request):
-        return render(request, 'form.html')
+
+        context = {
+            'categories': Category.objects.all(),
+            'institutions': Institution.objects.all()
+        }
+        return render(request, 'form.html', context)
 
 
 class Login(View):
@@ -80,17 +88,9 @@ class Register(View):
     template_name = 'register.html'
 
     def get(self, request):
-        # form = RegisterForm()
-        return render(request, self.template_name) #, {'form': form})
+        return render(request, self.template_name)
 
     def post(self, request):
-        # form = RegisterForm(request.POST
-        # if form.is_valid():
-        #     user = User.objects.create_user(form.cleaned_data['e-mail'], form.cleaned_data['e-mail'], form.cleaned_data['password'])
-        #     # procesowanie danych
-        #     return HttpResponse('User already exist!!@!')
-        # else:
-        #     return HttpResponse('Form is invalid!!!')
 
         username = email = request.POST['email']
         name = request.POST['name']
@@ -104,3 +104,8 @@ class Register(View):
             return HttpResponse('password mismatch')
 
         return redirect('login')
+
+
+class UserView(View):
+    def get(self, request):
+        return render(request, 'user-view.html')

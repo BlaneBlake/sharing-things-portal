@@ -7,6 +7,9 @@ from django.db import models
 class Category(models.Model):
     name = models.CharField(max_length=128)
 
+    def __str__(self):
+        return self.name
+
 
 class Institution(models.Model):
 
@@ -20,6 +23,9 @@ class Institution(models.Model):
     description = models.TextField()
     type = models.IntegerField(choices=TYPE_CHOICE, default=1)
     categories = models.ManyToManyField(Category)
+
+    def __str__(self):
+        return self.name
 
 
 class Donation(models.Model):
