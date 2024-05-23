@@ -55,6 +55,9 @@ class AddDonation(LoginRequiredMixin, View):
         }
         return render(request, 'form.html', context)
 
+    def post(self, request):
+        return HttpResponse('post form działa')
+
 
 class Login(View):
     template_name = 'login.html'
