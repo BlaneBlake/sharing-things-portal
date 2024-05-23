@@ -235,6 +235,44 @@ document.addEventListener("DOMContentLoaded", function() {
       this.$step.parentElement.hidden = this.currentStep >= 6;
 
       // TODO: get data from inputs and show them in summary
+
+// --------------KROK 5---------------------
+
+      // pobiera wszystkie kategorie
+      const categories = document.querySelectorAll(" input[type=checkbox]");
+
+      // sprawdza które checkboxy są odznaczone
+      function choose(arr) {
+        const chosenElements = [];
+        arr.forEach(function (value, index, array) {
+          if (value.checked == true) {
+            this.chosenElements = chosenElements.push(value)
+          }
+        });
+        return chosenElements
+      }
+
+      // przekazuje odznaczone checkboxy do listy
+      const chosenCategories = choose(categories)
+
+      categories.forEach(function (categoryValue ) {
+        institutions.forEach
+        if (!(value in chosenCategories)) {
+          value.display
+
+        }
+      })
+
+      function institutionDisplay(categories) {
+          arr2d.forEach(function (row) {
+              row.forEach(function (column) {
+                  console.log(column);
+              });
+          });
+      };
+
+// !!!--------------KROK 5---------------------!!!
+
     }
 
     /**
@@ -255,15 +293,3 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-// --------------KROK 5---------------------
-const donation ={
-  choosenCategories: document.querySelectorAll(" input[type=checkbox]"),
-  // choose: function ()
-
-}
-
-// POBIERA WARTOSCI WSZYSTKICH PÓL INPUT
-// document.querySelectorAll(" input[type=checkbox]").forEach(function(value, index, array) {
-//         console.log('element ' + index + ' to ' + value.value)
-//
-//     });
