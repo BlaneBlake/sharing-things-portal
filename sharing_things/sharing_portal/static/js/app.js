@@ -239,7 +239,10 @@ document.addEventListener("DOMContentLoaded", function() {
 // --------------KROK 5---------------------
 
       // pobiera wszystkie kategorie
-      const categories = document.querySelectorAll(" input[type=checkbox]");
+      const categories = document.querySelectorAll(" input[type=checkbox][name='categories']");
+
+      //pobiera wszystkie inputy organizacji, niżej display dodam do parentElement
+      const institutions = document.querySelectorAll(" input[type=radio][name='organization']");
 
       // sprawdza które checkboxy są odznaczone
       function choose(arr) {
@@ -253,23 +256,45 @@ document.addEventListener("DOMContentLoaded", function() {
       }
 
       // przekazuje odznaczone checkboxy do listy
-      const chosenCategories = choose(categories)
+      const chosenCategories = choose(categories);
 
-      categories.forEach(function (categoryValue ) {
-        institutions.forEach
-        if (!(value in chosenCategories)) {
-          value.display
+      // sprawdza czy instytucja jest na chosenCategory i zmienia atrybut display
+      function institutionDisplay() {
+          institutions.forEach(function (institution) {
+            chosenCategories.forEach(function (category){
 
-        }
-      })
+              if (institution.value != category.value) {
 
-      function institutionDisplay(categories) {
-          arr2d.forEach(function (row) {
-              row.forEach(function (column) {
-                  console.log(column);
-              });
+                institution.parentElement.parentElement.style.display = 'none'
+
+              }
+
+            })
           });
-      };
+      }
+
+      // Wywołuje działanie kodu po naciśnięciu przycisku (na razie działa tylko wywołanie funkcji "institutionDisplay" w konsoli)
+
+
+      // this.$next.forEach(btn => {
+      //   btn.addEventListener("click", e => {
+      //     console.log("działam")
+      //   });
+      // });
+
+      // const formButtonsNextStep = document.querySelectorAll(".next-step");
+      // // const buttonNext = document.querySelector(".next-step");
+      // const buttonNext = document.querySelector(" button")
+      // // formButtonsNextStep.forEach(function (button) {
+      //
+      // // buttonNext.addEventListener('click', institutionDisplay)
+      // buttonNext.addEventListener('click', function (event){
+      //   console.log('klik');
+      // });
+
+      // })
+
+
 
 // !!!--------------KROK 5---------------------!!!
 
@@ -291,5 +316,6 @@ document.addEventListener("DOMContentLoaded", function() {
     new FormSteps(form);
   }
 });
+
 
 
