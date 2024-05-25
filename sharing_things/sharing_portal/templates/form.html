@@ -110,11 +110,11 @@
                 <h3>Wybierz organizacje, której chcesz pomóc:</h3>
                   
                 {% for institution in institutions %} 
-{#                    {% if institution.type ==  %}#}
+         
 
                     <div class="form-group form-group--checkbox">
                       <label>
-                        <input type="radio" name="organization" value="old" />
+                        <input type="radio" name="organization" value={{ institution.type }} />
                         <span class="checkbox radio"></span>
                         <span class="description">
                           <div class="title">Fundacja “{{ institution.name }}”</div>
@@ -125,22 +125,8 @@
                       </label>
                     </div>
                         
-{#                    {% endif %}#}
-                {% endfor %}  
-
-                <div class="form-group form-group--checkbox">
-                  <label>
-                    <input type="radio" name="organization" value="old" />
-                    <span class="checkbox radio"></span>
-                    <span class="description">
-                      <div class="title">Fundacja “Dla dzieci"</div>
-                      <div class="subtitle">
-                        Cel i misja: Pomoc osobom znajdującym się w trudnej sytuacji
-                        życiowej.
-                      </div>
-                    </span>
-                  </label>
-                </div>
+        
+                {% endfor %}
 
                 <div class="form-group form-group--buttons">
                   <button type="button" class="btn prev-step">Wstecz</button>
