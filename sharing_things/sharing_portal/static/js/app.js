@@ -1,7 +1,11 @@
+console.log("Script is loaded");
+
 document.addEventListener("DOMContentLoaded", function() {
   /**
    * HomePage - Help section
    */
+
+
   class Help {
     constructor($el) {
       this.$el = $el;
@@ -74,6 +78,7 @@ document.addEventListener("DOMContentLoaded", function() {
   /**
    * Form Select
    */
+
   class FormSelect {
     constructor($el) {
       this.$el = $el;
@@ -184,6 +189,8 @@ document.addEventListener("DOMContentLoaded", function() {
      * Init all methods
      */
     init() {
+      console.log('init try');
+
       this.events();
       this.updateForm();
     }
@@ -198,6 +205,8 @@ document.addEventListener("DOMContentLoaded", function() {
           e.preventDefault();
           this.currentStep++;
           this.updateForm();
+          console.log('events try');
+          this.institutionDisplay();
         });
       });
 
@@ -207,6 +216,7 @@ document.addEventListener("DOMContentLoaded", function() {
           e.preventDefault();
           this.currentStep--;
           this.updateForm();
+
         });
       });
 
@@ -236,31 +246,38 @@ document.addEventListener("DOMContentLoaded", function() {
 
       // TODO: get data from inputs and show them in summary
 
-// --------------KROK 5---------------------
+      console.log('updateForm try');
+      this.institutionDisplay();
 
-      // pobiera wszystkie kategorie
-      const categories = document.querySelectorAll(" input[type=checkbox][name='categories']");
+    }
 
-      //pobiera wszystkie inputy organizacji, niżej display dodam do parentElement
-      const institutions = document.querySelectorAll(" input[type=radio][name='organization']");
+     // --------------KROK 5---------------------
 
-      // sprawdza które checkboxy są odznaczone
-      function choose(arr) {
+     institutionDisplay() {
+
+        console.log('institutionDisplay try');
+
+        // pobiera wszystkie kategorie
+        const categories = document.querySelectorAll(" input[type=checkbox][name='categories']");
+        //pobiera wszystkie inputy organizacji, niżej display dodam do parentElement
+        const institutions = document.querySelectorAll(" input[type=radio][name='organization']");
+
+        // sprawdza które checkboxy są odznaczone
+        function choose(arr) {
         const chosenElements = [];
         arr.forEach(function (value, index, array) {
           if (value.checked == true) {
-            this.chosenElements = chosenElements.push(value)
+            chosenElements.push(value)
           }
         });
         return chosenElements
-      }
+        }
 
-      // przekazuje odznaczone checkboxy do listy
-      const chosenCategories = choose(categories);
+        // przekazuje odznaczone checkboxy do listy
+        const chosenCategories = choose(categories);
 
-      // sprawdza czy instytucja jest na chosenCategory i zmienia atrybut display
-      function institutionDisplay() {
-          institutions.forEach(function (institution) {
+        // sprawdza czy instytucja jest na chosenCategory i zmienia atrybut display
+        institutions.forEach(function (institution) {
             chosenCategories.forEach(function (category){
 
               if (institution.value != category.value) {
@@ -270,35 +287,12 @@ document.addEventListener("DOMContentLoaded", function() {
               }
 
             })
-          });
-      }
+        });
+     }
 
-      // Wywołuje działanie kodu po naciśnięciu przycisku (na razie działa tylko wywołanie funkcji "institutionDisplay" w konsoli)
-
-
-      // this.$next.forEach(btn => {
-      //   btn.addEventListener("click", e => {
-      //     console.log("działam")
-      //   });
-      // });
-
-      // const formButtonsNextStep = document.querySelectorAll(".next-step");
-      // // const buttonNext = document.querySelector(".next-step");
-      // const buttonNext = document.querySelector(" button")
-      // // formButtonsNextStep.forEach(function (button) {
-      //
-      // // buttonNext.addEventListener('click', institutionDisplay)
-      // buttonNext.addEventListener('click', function (event){
-      //   console.log('klik');
-      // });
-
-      // })
+     // !!!--------------KROK 5---------------------!!!
 
 
-
-// !!!--------------KROK 5---------------------!!!
-
-    }
 
     /**
      * Submit form
